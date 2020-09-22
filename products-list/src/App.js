@@ -1,8 +1,11 @@
 import React from 'react';
+import blesk from 'blesk';
+
+const windowName = `cart${Math.floor(Math.random() * Math.floor(4000))}`;
 
 const addToCart = (item) => () => {
-  const event = new CustomEvent('addToCart', { detail: item });
-  window.dispatchEvent(event);
+  console.log('i am doing add to cart');
+  blesk.event.publish('addToCart', item);
 }
 
 const productItemView = (product, index) => {
@@ -22,4 +25,7 @@ export default () =>
     <ul style={{ display: 'flex', padding: '0' }}>
       { ['one', 'two', 'three', 'four'].map(productItemView) }
     </ul>
+    <button onClick={()=>{blesk.child.open('http://localhost:4000/', windowName);}}>Open child cart</button>
+    <button onClick={()=>{blesk.child.close(windowName);}}>close cart</button>
+    <button onClick={()=>{blesk.child.get();}}>list instnaces</button>
   </section>;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Blesk from 'blesk';
+import blesk from 'blesk';
 
-const windowName = `list${Math.floor(Math.random() * Math.floor(4000))}`;
+const windowName = `product-list${Math.floor(Math.random() * Math.floor(4000))}`;
 
 export default class App extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    Blesk.event.register('addToCart', (detail)=>{
+    blesk.event.register('addToCart', (detail)=>{
       this.setState({ products: [...this.state.products, detail] });
     });
   }
@@ -20,17 +20,17 @@ export default class App extends Component {
   render () {
     return (
       <sidebar>
-        <h2>Cart</h2>
+        <h2>List</h2>
         { this.renderProducts() }
-        <button onClick={()=>{Blesk.child.open('http://localhost:5003/', 'list');}}>Open list</button>
-        <button onClick={()=>{Blesk.child.close('list');}}>Close List</button>
+        <button onClick={()=>{blesk.child.open('http://localhost:5000/', windowName);}}>Open product-list</button>
+        <button onClick={()=>{blesk.child.close(windowName);}}>Close product-list</button>
       </sidebar>
     );
   }
 
   renderProducts () {
     if (this.state.products.length === 0) {
-      return <p>Your cart is empty</p>;
+      return <p>Your list is empty</p>;
     }
     return <ul>{ this.state.products.map(this.renderProduct) }</ul>;
   }

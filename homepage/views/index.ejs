@@ -6,8 +6,9 @@
   </head>
   <body>
     <div class="load-app" data-url="http://localhost:3000/"></div>
-    <div class="load-app" data-url="http://localhost:5000/"></div>
     <div class="load-app" data-url="http://localhost:4000/"></div>
+    <div class="load-app" data-url="http://localhost:5000/"></div>
+    <div class="load-app" data-url="http://localhost:5003/"></div>
     <script>
       function loadPage (element) {
         var xmlHttp = new XMLHttpRequest();
@@ -16,7 +17,7 @@
             element.innerHTML = xmlHttp.responseText;
             [].forEach.call(element.querySelectorAll('script'), function (nonExecutableScript) {
               var script = document.createElement("script");
-              script.setAttribute("src", nonExecutableScript.src);
+              script.setAttribute("src", nonExecutableScript.src.replace("http://localhost:8080/", element.getAttribute('data-url')));
               script.setAttribute("type", "text/javascript");
               element.appendChild(script);
               nonExecutableScript.parentNode.removeChild(nonExecutableScript);
